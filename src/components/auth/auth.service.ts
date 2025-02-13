@@ -4,40 +4,40 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt/dist';
-import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { LoginDTO } from './dto/login.dto';
 import * as bcrypt from 'bcrypt';
-import * as otpGenerator from 'otp-generator';
-import { OTPTYPEENUM } from 'src/enum/otp.enum';
-import { OtpDTO } from './dto/otp.dto';
-import { UtilsService } from '../utils/utils.service';
-import { SignupDTO } from './dto/signup.dto';
-import { getEmail } from '../utils/email/dataEmail';
-import { EmailDTO } from './dto/email.dto';
-import { UpdateProfileDTO } from './dto/profile.dto';
-import { User, UserDocument } from 'src/schema/User/user.schema';
-import { Otp, OtpDocument } from 'src/schema/OTP/otp.schema';
-import { WalletService } from '../wallet/wallet.service';
-import {
-  GetUsersDTO,
-  UpdateUserActiveDTO,
-  UpdateUserRoleDTO,
-} from './dto/users.dto';
-import { UserRoleENUM } from 'src/enum/user.enum';
-import { ChangeEmailDTO, ChangePasswordDTO } from './dto/password.dto';
-const crypto = require('crypto');
 import { encode } from 'hi-base32';
+import { Model } from 'mongoose';
+import * as otpGenerator from 'otp-generator';
 import * as OTPAuth from 'otpauth';
+import { Banner, BannerDocument } from 'src/schema/banner/banner.schema';
 import {
   Currency,
   CurrencyDocument,
 } from 'src/schema/Currency/currency.schema';
 import { NFT, NFTDocument } from 'src/schema/Nft/nft.schema';
-import { NftService } from '../nft/nft.service';
-import { Banner, BannerDocument } from 'src/schema/banner/banner.schema';
-import { AddBannerDTO, GetBannerDTO, UpdateBannerDTO } from './dto/banner.dto';
+import { Otp, OtpDocument } from 'src/schema/OTP/otp.schema';
+import { User, UserDocument } from 'src/schema/User/user.schema';
 import { cleanObject } from 'src/utils/dto-transform';
+import { OTPTYPEENUM } from '../../enum/otp.enum';
+import { UserRoleENUM } from '../../enum/user.enum';
+import { NftService } from '../nft/nft.service';
+import { getEmail } from '../utils/email/dataEmail';
+import { UtilsService } from '../utils/utils.service';
+import { WalletService } from '../wallet/wallet.service';
+import { AddBannerDTO, GetBannerDTO, UpdateBannerDTO } from './dto/banner.dto';
+import { EmailDTO } from './dto/email.dto';
+import { LoginDTO } from './dto/login.dto';
+import { OtpDTO } from './dto/otp.dto';
+import { ChangeEmailDTO, ChangePasswordDTO } from './dto/password.dto';
+import { UpdateProfileDTO } from './dto/profile.dto';
+import { SignupDTO } from './dto/signup.dto';
+import {
+  GetUsersDTO,
+  UpdateUserActiveDTO,
+  UpdateUserRoleDTO,
+} from './dto/users.dto';
+const crypto = require('crypto');
 
 @Injectable()
 export class AuthService {
@@ -794,7 +794,7 @@ export class AuthService {
       if (userData.isSuperAdmin && getUsersDTO.filterOnlyAdmins) {
         filter['isAdmin'] =
           getUsersDTO.filterOnlyAdmins === 'true' ||
-            getUsersDTO.filterOnlyAdmins === true
+          getUsersDTO.filterOnlyAdmins === true
             ? true
             : false;
       }
@@ -946,9 +946,12 @@ export class AuthService {
     try {
       updateBannerDTO = cleanObject(updateBannerDTO);
 
-      const bannerDocumentUpdate = await this._bannerModel.updateOne({
-        _id: updateBannerDTO.bannerId,
-      }, updateBannerDTO);
+      const bannerDocumentUpdate = await this._bannerModel.updateOne(
+        {
+          _id: updateBannerDTO.bannerId,
+        },
+        updateBannerDTO,
+      );
 
       const bannerDocument = await this._bannerModel.findOne({
         _id: updateBannerDTO.bannerId,
@@ -963,17 +966,16 @@ export class AuthService {
 
   async getBanners(getBannerDTO: GetBannerDTO) {
     try {
-
       let filter = {
         isDeleted: false,
       };
 
       if (getBannerDTO.isDeleted) {
-        filter['isDeleted'] = getBannerDTO.isDeleted == "true" ? true : false;
+        filter['isDeleted'] = getBannerDTO.isDeleted == 'true' ? true : false;
       }
 
       if (getBannerDTO.isActive) {
-        filter['isActive'] = getBannerDTO.isActive == "true" ? true : false;
+        filter['isActive'] = getBannerDTO.isActive == 'true' ? true : false;
       }
 
       console.log(filter);
@@ -981,14 +983,11 @@ export class AuthService {
       let limit = getBannerDTO.limit ? Number(getBannerDTO.limit) : 10;
       let offset = getBannerDTO.offset ? Number(getBannerDTO.offset) : 0;
 
-      let pagination = [
-        { $skip: offset },
-        { $limit: limit },
-      ];
+      let pagination = [{ $skip: offset }, { $limit: limit }];
 
       const bannerDocuments = await this._bannerModel.aggregate([
         {
-          $match: filter
+          $match: filter,
         },
         { $addFields: { id: '$_id' } },
         {
@@ -998,12 +997,11 @@ export class AuthService {
             mediaUrl: 1,
             isActive: 1,
             isDeleted: 1,
-          }
+          },
         },
         { $sort: { createdAt: -1 } },
         ...pagination,
-      ])
-
+      ]);
 
       return bannerDocuments;
     } catch (err) {

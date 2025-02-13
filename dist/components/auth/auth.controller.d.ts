@@ -24,14 +24,14 @@
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
 import { AuthService } from './auth.service';
+import { AddBannerDTO, GetBannerDTO, UpdateBannerDTO } from './dto/banner.dto';
+import { EmailDTO } from './dto/email.dto';
 import { LoginDTO } from './dto/login.dto';
 import { OtpDTO } from './dto/otp.dto';
-import { SignupDTO } from './dto/signup.dto';
-import { EmailDTO } from './dto/email.dto';
 import { ChangeEmailDTO, ChangePasswordDTO, PasswordDTO } from './dto/password.dto';
 import { UpdateProfileDTO } from './dto/profile.dto';
+import { SignupDTO } from './dto/signup.dto';
 import { GetUsersDTO, UpdateUserActiveDTO, UpdateUserRoleDTO } from './dto/users.dto';
-import { AddBannerDTO, GetBannerDTO, UpdateBannerDTO } from './dto/banner.dto';
 export declare class AuthController {
     private authService;
     constructor(authService: AuthService);

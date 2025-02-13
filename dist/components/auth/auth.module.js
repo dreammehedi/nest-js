@@ -9,19 +9,19 @@ var AuthModule_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthModule = void 0;
 const common_1 = require("@nestjs/common");
-const auth_controller_1 = require("./auth.controller");
-const auth_service_1 = require("./auth.service");
-const mongoose_1 = require("@nestjs/mongoose");
-const user_schema_1 = require("../../schema/User/user.schema");
-const otp_schema_1 = require("../../schema/OTP/otp.schema");
 const jwt_1 = require("@nestjs/jwt");
-const jwt_strategy_1 = require("./jwt.strategy");
-const utils_service_1 = require("../utils/utils.service");
-const wallet_module_1 = require("../wallet/wallet.module");
+const mongoose_1 = require("@nestjs/mongoose");
+const banner_schema_1 = require("../../schema/banner/banner.schema");
 const currency_schema_1 = require("../../schema/Currency/currency.schema");
 const nft_schema_1 = require("../../schema/Nft/nft.schema");
+const otp_schema_1 = require("../../schema/OTP/otp.schema");
+const user_schema_1 = require("../../schema/User/user.schema");
 const nft_module_1 = require("../nft/nft.module");
-const banner_schema_1 = require("../../schema/banner/banner.schema");
+const utils_service_1 = require("../utils/utils.service");
+const wallet_module_1 = require("../wallet/wallet.module");
+const auth_controller_1 = require("./auth.controller");
+const auth_service_1 = require("./auth.service");
+const jwt_strategy_1 = require("./jwt.strategy");
 let AuthModule = AuthModule_1 = class AuthModule {
     static forRoot() {
         return {

@@ -24,22 +24,22 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { JwtService } from '@nestjs/jwt/dist';
 import { Model } from 'mongoose';
-import { LoginDTO } from './dto/login.dto';
-import { OtpDTO } from './dto/otp.dto';
-import { UtilsService } from '../utils/utils.service';
-import { SignupDTO } from './dto/signup.dto';
-import { EmailDTO } from './dto/email.dto';
-import { UpdateProfileDTO } from './dto/profile.dto';
-import { User, UserDocument } from 'src/schema/User/user.schema';
-import { OtpDocument } from 'src/schema/OTP/otp.schema';
-import { WalletService } from '../wallet/wallet.service';
-import { GetUsersDTO, UpdateUserActiveDTO, UpdateUserRoleDTO } from './dto/users.dto';
-import { ChangeEmailDTO, ChangePasswordDTO } from './dto/password.dto';
+import { Banner, BannerDocument } from 'src/schema/banner/banner.schema';
 import { CurrencyDocument } from 'src/schema/Currency/currency.schema';
 import { NFTDocument } from 'src/schema/Nft/nft.schema';
+import { OtpDocument } from 'src/schema/OTP/otp.schema';
+import { User, UserDocument } from 'src/schema/User/user.schema';
 import { NftService } from '../nft/nft.service';
-import { Banner, BannerDocument } from 'src/schema/banner/banner.schema';
+import { UtilsService } from '../utils/utils.service';
+import { WalletService } from '../wallet/wallet.service';
 import { AddBannerDTO, GetBannerDTO, UpdateBannerDTO } from './dto/banner.dto';
+import { EmailDTO } from './dto/email.dto';
+import { LoginDTO } from './dto/login.dto';
+import { OtpDTO } from './dto/otp.dto';
+import { ChangeEmailDTO, ChangePasswordDTO } from './dto/password.dto';
+import { UpdateProfileDTO } from './dto/profile.dto';
+import { SignupDTO } from './dto/signup.dto';
+import { GetUsersDTO, UpdateUserActiveDTO, UpdateUserRoleDTO } from './dto/users.dto';
 export declare class AuthService {
     private jwtService;
     private _userModel;

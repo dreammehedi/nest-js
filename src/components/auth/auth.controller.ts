@@ -1,38 +1,30 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { User } from 'src/decorators/user.decorator';
 import { AuthService } from './auth.service';
+import { AddBannerDTO, GetBannerDTO, UpdateBannerDTO } from './dto/banner.dto';
+import { EmailDTO } from './dto/email.dto';
 import { LoginDTO } from './dto/login.dto';
 import { OtpDTO } from './dto/otp.dto';
-import { SignupDTO } from './dto/signup.dto';
-import { ApiTags, ApiBearerAuth, ApiOAuth2, ApiQuery } from '@nestjs/swagger';
-import { EmailDTO } from './dto/email.dto';
 import {
   ChangeEmailDTO,
   ChangePasswordDTO,
   PasswordDTO,
 } from './dto/password.dto';
-import { JwtAuthGuard } from './jwt-auth.guard';
-import { User } from 'src/decorators/user.decorator';
 import { UpdateProfileDTO } from './dto/profile.dto';
+import { SignupDTO } from './dto/signup.dto';
 import {
   GetUsersDTO,
   UpdateUserActiveDTO,
   UpdateUserRoleDTO,
 } from './dto/users.dto';
-import { JwtAdminGuard, JwtSuperAdminGuard } from './jwt-admin.guard';
-import { AddBannerDTO, GetBannerDTO, UpdateBannerDTO } from './dto/banner.dto';
+import { JwtAdminGuard } from './jwt-admin.guard';
+import { JwtAuthGuard } from './jwt-auth.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   @Post('signup')
   signup(@Body() signupDto: SignupDTO) {

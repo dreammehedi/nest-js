@@ -14,15 +14,15 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MediaUploadController = void 0;
 const common_1 = require("@nestjs/common");
-const path_1 = require("path");
-const multer_1 = require("multer");
-const path = require("path");
 const platform_express_1 = require("@nestjs/platform-express");
 const swagger_1 = require("@nestjs/swagger");
 const fs = require("fs");
-const jimp = require('jimp');
+const multer_1 = require("multer");
+const path = require("path");
+const path_1 = require("path");
 const media_upload_service_1 = require("./media-upload.service");
-const jwt_auth_guard_1 = require("../../auth/jwt-auth.guard");
+const jimp = require('jimp');
+const jwt_auth_guard_1 = require("../../../components/auth/jwt-auth.guard");
 const fileFilter = (req, file, callback) => {
     const ext = path.extname(file.originalname);
     if (!process.env.whiteListedExtensions.includes(ext.toLowerCase())) {

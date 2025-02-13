@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
-import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from 'src/schema/User/user.schema';
-import { Otp, OtpSchema } from 'src/schema/OTP/otp.schema';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from './jwt.strategy';
-import { UtilsService } from '../utils/utils.service';
-import { WalletModule } from '../wallet/wallet.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Banner, BannerSchema } from 'src/schema/banner/banner.schema';
 import { Currency, CurrencySchema } from 'src/schema/Currency/currency.schema';
 import { NFT, NFTSchema } from 'src/schema/Nft/nft.schema';
+import { Otp, OtpSchema } from 'src/schema/OTP/otp.schema';
+import { User, UserSchema } from 'src/schema/User/user.schema';
 import { NftModule } from '../nft/nft.module';
-import { Banner, BannerSchema } from 'src/schema/banner/banner.schema';
+import { UtilsService } from '../utils/utils.service';
+import { WalletModule } from '../wallet/wallet.module';
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
+import { JwtStrategy } from './jwt.strategy';
 
 @Module({})
 export class AuthModule {

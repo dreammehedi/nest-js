@@ -1,28 +1,27 @@
 import {
   Controller,
-  Post,
-  UploadedFile,
-  UseInterceptors,
-  Param,
   Get,
-  Res,
-  UseGuards,
   HttpException,
   HttpStatus,
+  Param,
+  Post,
   Query,
-  Body,
   Req,
+  Res,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
-import { extname } from 'path';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import * as fs from 'fs';
 import { diskStorage } from 'multer';
 import * as path from 'path';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBearerAuth, ApiBody, ApiTags, ApiConsumes } from '@nestjs/swagger';
-import * as fs from 'fs';
-const jimp = require('jimp');
-import { URLBody } from '../dto/url.dto';
+import { extname } from 'path';
 import { MediaUploadService } from './media-upload.service';
-import { JwtAuthGuard } from 'src/components/auth/jwt-auth.guard';
+const jimp = require('jimp');
+// import { JwtAuthGuard } from 'src/components/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../../../components/auth/jwt-auth.guard';
 
 const fileFilter = (req, file, callback) => {
   const ext = path.extname(file.originalname);

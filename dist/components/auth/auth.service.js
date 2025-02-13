@@ -15,25 +15,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const dist_1 = require("@nestjs/jwt/dist");
-const mongoose_1 = require("mongoose");
-const mongoose_2 = require("@nestjs/mongoose");
+const mongoose_1 = require("@nestjs/mongoose");
 const bcrypt = require("bcrypt");
-const otpGenerator = require("otp-generator");
-const otp_enum_1 = require("../../enum/otp.enum");
-const utils_service_1 = require("../utils/utils.service");
-const dataEmail_1 = require("../utils/email/dataEmail");
-const user_schema_1 = require("../../schema/User/user.schema");
-const otp_schema_1 = require("../../schema/OTP/otp.schema");
-const wallet_service_1 = require("../wallet/wallet.service");
-const user_enum_1 = require("../../enum/user.enum");
-const crypto = require('crypto');
 const hi_base32_1 = require("hi-base32");
+const mongoose_2 = require("mongoose");
+const otpGenerator = require("otp-generator");
 const OTPAuth = require("otpauth");
+const banner_schema_1 = require("../../schema/banner/banner.schema");
 const currency_schema_1 = require("../../schema/Currency/currency.schema");
 const nft_schema_1 = require("../../schema/Nft/nft.schema");
-const nft_service_1 = require("../nft/nft.service");
-const banner_schema_1 = require("../../schema/banner/banner.schema");
+const otp_schema_1 = require("../../schema/OTP/otp.schema");
+const user_schema_1 = require("../../schema/User/user.schema");
 const dto_transform_1 = require("../../utils/dto-transform");
+const otp_enum_1 = require("../../enum/otp.enum");
+const user_enum_1 = require("../../enum/user.enum");
+const nft_service_1 = require("../nft/nft.service");
+const dataEmail_1 = require("../utils/email/dataEmail");
+const utils_service_1 = require("../utils/utils.service");
+const wallet_service_1 = require("../wallet/wallet.service");
+const crypto = require('crypto');
 let AuthService = class AuthService {
     constructor(jwtService, _userModel, _otpModel, _currencyModel, _nftModel, _bannerModel, utilsService, walletService, nftService) {
         this.jwtService = jwtService;
@@ -787,21 +787,18 @@ let AuthService = class AuthService {
                 isDeleted: false,
             };
             if (getBannerDTO.isDeleted) {
-                filter['isDeleted'] = getBannerDTO.isDeleted == "true" ? true : false;
+                filter['isDeleted'] = getBannerDTO.isDeleted == 'true' ? true : false;
             }
             if (getBannerDTO.isActive) {
-                filter['isActive'] = getBannerDTO.isActive == "true" ? true : false;
+                filter['isActive'] = getBannerDTO.isActive == 'true' ? true : false;
             }
             console.log(filter);
             let limit = getBannerDTO.limit ? Number(getBannerDTO.limit) : 10;
             let offset = getBannerDTO.offset ? Number(getBannerDTO.offset) : 0;
-            let pagination = [
-                { $skip: offset },
-                { $limit: limit },
-            ];
+            let pagination = [{ $skip: offset }, { $limit: limit }];
             const bannerDocuments = await this._bannerModel.aggregate([
                 {
-                    $match: filter
+                    $match: filter,
                 },
                 { $addFields: { id: '$_id' } },
                 {
@@ -811,7 +808,7 @@ let AuthService = class AuthService {
                         mediaUrl: 1,
                         isActive: 1,
                         isDeleted: 1,
-                    }
+                    },
                 },
                 { $sort: { createdAt: -1 } },
                 ...pagination,
@@ -827,17 +824,17 @@ let AuthService = class AuthService {
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __param(1, (0, mongoose_2.InjectModel)(user_schema_1.User.name)),
-    __param(2, (0, mongoose_2.InjectModel)(otp_schema_1.Otp.name)),
-    __param(3, (0, mongoose_2.InjectModel)(currency_schema_1.Currency.name)),
-    __param(4, (0, mongoose_2.InjectModel)(nft_schema_1.NFT.name)),
-    __param(5, (0, mongoose_2.InjectModel)(banner_schema_1.Banner.name)),
+    __param(1, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
+    __param(2, (0, mongoose_1.InjectModel)(otp_schema_1.Otp.name)),
+    __param(3, (0, mongoose_1.InjectModel)(currency_schema_1.Currency.name)),
+    __param(4, (0, mongoose_1.InjectModel)(nft_schema_1.NFT.name)),
+    __param(5, (0, mongoose_1.InjectModel)(banner_schema_1.Banner.name)),
     __metadata("design:paramtypes", [dist_1.JwtService,
-        mongoose_1.Model,
-        mongoose_1.Model,
-        mongoose_1.Model,
-        mongoose_1.Model,
-        mongoose_1.Model,
+        mongoose_2.Model,
+        mongoose_2.Model,
+        mongoose_2.Model,
+        mongoose_2.Model,
+        mongoose_2.Model,
         utils_service_1.UtilsService,
         wallet_service_1.WalletService,
         nft_service_1.NftService])
